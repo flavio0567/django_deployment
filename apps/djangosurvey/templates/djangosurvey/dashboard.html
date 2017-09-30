@@ -1,0 +1,73 @@
+{% extends 'djangosurvey/index.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block context %}
+{% include 'djangosurvey/head_css.html'%}
+{% include 'djangosurvey/navbar.html' %}
+
+      {% if user %}
+        <h1>Hello, {{ user.name }}!</h1>
+      {% endif %}
+      <hr>
+      <h4>Your Wish List:</h4>
+      <table class="table table-striped table-hover ">
+          <tr>
+              <th><p>Item</p></th>
+              <th><p>Added by</p></th>
+              <th><p>Date Added</p></th>
+              <th><p>Action</p></th>
+          </tr>
+          {% if items_user %}
+              {% for item in items_user %}
+              <tr>
+                  <td class="col-md-1"><a href="/wish/items/{{ item.id }}">{{ item.description }}</a></td>
+                  <td class="col-md-2">{{ item.added_by.name }}</td>
+                  <td class="col-md-3">{{ item.item_dt_added }}</td>
+                  {% if user.id == item.added_by.id %}
+                      <td class="col-md-5"><a href="/delete/item/{{ item.id }}">Delete</a></td>
+                  {% else %}
+                      <td class="col-md-5"><a href="/remove/wish/{{ item.id }}">Remove from my Wishlist</a></td>
+                  {% endif %}
+              </tr>
+              {% endfor %}
+          {% endif %}
+          {% if items_added %}
+              {% for item in items_added%}
+              <tr>
+                  <td class="col-md-1"><a href="/wish/items/{{ item.id }}">{{ item.description }}</a></td>
+                  <td class="col-md-2">{{ item.added_by.name }}</td>
+                  <td class="col-md-3">{{ item.item_dt_added }}</td>
+                  {% if user.id == item.added_by.id %}
+                      <td class="col-md-5"><a href="/delete/item/{{ item.id }}">Delete</a></td>
+                  {% else %}
+                      <td class="col-md-5"><a href="/remove/wish/{{ item.id }}">Remove from my Wishlist</a></td>
+                  {% endif %}
+
+              </tr>
+              {% endfor %}
+          {% endif %}
+      </table>
+
+      <h4>Other user's Wish List</h4>
+      <table class="table table-striped table-hover ">
+          <tr>
+            <th><p>Item</p></th>
+            <th><p>Added by</p></th>
+            <th><p>Date Added</p></th>
+            <th><p>Action</p></th>
+          </tr>
+          {% if other_items %}
+              {% for item in other_items %}
+              <tr>
+                  <td class="col-md-1"><a href="/wish/items/{{ item.id }}">{{ item.description }}</a></td>
+                  <td class="col-md-2">{{ item.added_by.name }}</td>
+                  <td class="col-md-3">{{ item.item_dt_added }}</td>
+                  <td class="col-md-4"><a href="/wish/add/{{ item.id }}">Add to my Wishlist</a></td>
+              </tr>
+              {% endfor %}
+          {% endif %}
+      </table>
+      <a href="/add/item">Add Item</a>
+
+{% endblock context %}

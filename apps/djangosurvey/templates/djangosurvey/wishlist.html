@@ -1,0 +1,26 @@
+{% extends 'djangosurvey/index.html' %}
+
+{% block title %}{{ item.description }}{% endblock title %}
+
+{% block context %}
+{% include 'djangosurvey/head_css.html'%}
+{% include 'djangosurvey/navbar.html' %}
+
+<article>
+
+  <ul>
+      <h2> {{ item.description }} </h2>
+  </ul>
+
+  <h3> User's who added this product/item under their wish list: </h3>
+  {% if users %}
+    <ul>
+        {% for user in users %}
+          <li>{{ user.name }}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+
+</article>
+
+{% endblock context %}

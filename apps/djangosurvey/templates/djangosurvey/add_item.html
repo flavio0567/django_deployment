@@ -1,0 +1,35 @@
+{% extends 'djangosurvey/index.html' %}
+
+{% block title %}Wish Items Create{% endblock title %}
+
+{% block context %}
+{% include 'djangosurvey/head_css.html'%}
+{% include 'djangosurvey/navbar.html' %}
+
+<h3>Create a New Wish List Item</h3>
+<hr>
+<span class="help-block">
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</span>
+
+<article>
+  <form action='/check_item' method='POST'>
+    {% csrf_token %}
+    <fieldset>
+      <div id="content">
+          <label><b>Item/Product:</b></label>
+          <input class="form-control" name="description" placeholder="Item product" type="text">
+
+            <button type="submit" class="signupbtn">Add</button>
+      </div>
+    </fieldset>
+  </form>
+</article>
+
+{% endblock context %}
